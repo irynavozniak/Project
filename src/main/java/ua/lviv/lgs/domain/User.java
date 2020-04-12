@@ -1,6 +1,5 @@
 package ua.lviv.lgs.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -8,73 +7,55 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
 public class User {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-
-	@Column(name = "firstName")
-	private String firstName;
-
-	@Column(name = "secondName")
-	private String secondName;
-
-	@Column
-	private Integer age;
-
-	@Column
+	
+	private String name;
+	private String surname;
 	private String email;
-
-	@Column
 	private String password;
-
-	@Column(name = "password_confirm")
+	
+	@Transient
 	private String passwordConfirm;
-
+	
 	@Enumerated(EnumType.STRING)
 	private UserRoles role;
-
-	public User() {
-	}
-
-	public User(String firstName, String secondName, Integer age, String email, String password, String passwordConfirm,
-			UserRoles role) {
-		this.firstName = firstName;
-		this.secondName = secondName;
-		this.age = age;
-		this.email = email;
-		this.password = password;
-		this.passwordConfirm = passwordConfirm;
-		this.role = role;
-	}
-
-	public User(Integer id, String firstName, String secondName, Integer age, String email, String password,
-			String passwordConfirm, UserRoles role) {
-		this.id = id;
-		this.firstName = firstName;
-		this.secondName = secondName;
-		this.age = age;
-		this.email = email;
-		this.password = password;
-		this.passwordConfirm = passwordConfirm;
-		this.role = role;
-	}
-
+	
+	public User() {}
+	
 	public User(User user) {
 		this.id = user.id;
-		this.firstName = user.firstName;
-		this.secondName = user.secondName;
-		this.age = user.age;
+		this.name = user.name;
+		this.surname = user.surname;
 		this.email = user.email;
 		this.password = user.password;
-		this.passwordConfirm = user.passwordConfirm;
 		this.role = user.role;
 	}
 
+	public User(String name, String surname, String email, String password, UserRoles role) {
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
+
+	public User(Integer id, String name, String surname, String email, String password, UserRoles role) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -83,28 +64,20 @@ public class User {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getSecondName() {
-		return secondName;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getEmail() {
@@ -123,14 +96,6 @@ public class User {
 		this.password = password;
 	}
 
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
-
 	public UserRoles getRole() {
 		return role;
 	}
@@ -139,18 +104,19 @@ public class User {
 		this.role = role;
 	}
 
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((age == null) ? 0 : age.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((passwordConfirm == null) ? 0 : passwordConfirm.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + ((secondName == null) ? 0 : secondName.hashCode());
 		return result;
 	}
 
@@ -163,50 +129,19 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (age == null) {
-			if (other.age != null)
-				return false;
-		} else if (!age.equals(other.age))
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
-			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (passwordConfirm == null) {
-			if (other.passwordConfirm != null)
-				return false;
-		} else if (!passwordConfirm.equals(other.passwordConfirm))
-			return false;
-		if (role != other.role)
-			return false;
-		if (secondName == null) {
-			if (other.secondName != null)
-				return false;
-		} else if (!secondName.equals(other.secondName))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", secondName=" + secondName + ", age=" + age
-				+ ", email=" + email + ", password=" + password + ", passwordConfirm=" + passwordConfirm + ", role="
-				+ role + "]";
+		return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password="
+				+ password + ", role=" + role + "]";
 	}
+	
+	
 }

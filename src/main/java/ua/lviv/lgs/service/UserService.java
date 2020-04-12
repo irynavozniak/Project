@@ -6,38 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ua.lviv.lgs.dao.UserRepository;
+import ua.lviv.lgs.dao.UserRepo;
 import ua.lviv.lgs.domain.User;
 import ua.lviv.lgs.domain.UserRoles;
 
+
 @Service
-public class UserService {
+public class UserService{
+	
 	private Logger logger = LoggerFactory.getLogger(UserService.class);
-
+	
 	@Autowired
-	private UserRepository userRepository;
-
+	private UserRepo userRepo;
+	
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
-
+	
 	public void save(User user) {
-		logger.info("Створити нового користувача: " + user);
-
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user.setPasswordConfirm(bCryptPasswordEncoder.encode(user.getPasswordConfirm()));
 		user.setRole(UserRoles.USER);
-		userRepository.save(user);
+		userRepo.save(user);
+		logger.debug("Adding a new user " + user);
 	}
-
-	public User findUserByEmail(String email) {
-		logger.info("Знайти користувача за email: " + email);
-
-		return userRepository.findByEmail(email).get();
-	}
-
-	public User findUserById(Integer id) {
-		logger.info("Знайти користувача за id: " + id);
-
-		return userRepository.findById(id).get();
+	
+	public User findByEmail(String email) {
+		logger.debug("Selecting user with email " + email);
+		return userRepo.findByEmail(email).get();
 	}
 }

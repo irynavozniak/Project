@@ -7,31 +7,29 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.lviv.lgs.dao.FacultyRepository;
+import ua.lviv.lgs.dao.FacultyRepo;
 import ua.lviv.lgs.domain.Faculty;
 
 @Service
 public class FacultyService {
-	private Logger logger = LoggerFactory.getLogger(UserService.class);
-
+	
+	private Logger logger = LoggerFactory.getLogger(FacultyService.class);
+	
 	@Autowired
-	private FacultyRepository facultyRepository;
-
-	public Faculty save(Faculty faculty) {
-		logger.info("Створити новий факультет: " + faculty);
-
-		return facultyRepository.save(faculty);
+	private FacultyRepo facultyRepo;
+	
+	public void save(Faculty faculty) {
+		facultyRepo.save(faculty);
+		logger.debug("Adding a new faculty " + faculty);
 	}
-
-	public List<Faculty> findAllFaculties() {
-		logger.info("Знайти всі факультети");
-
-		return facultyRepository.findAll();
+	
+	public List<Faculty> getAllFaculties(){
+		logger.debug("Selecting all faculties");
+		return facultyRepo.findAll();
 	}
-
-	public Faculty findFacultyById(Integer id) {
-		logger.info("Знайти факультет за id: " + id);
-
-		return facultyRepository.findById(id).get();
+	
+	public Faculty findById(Integer id) {
+		logger.debug("Selecting a faculty with id " + id);
+		return facultyRepo.findById(id).get();
 	}
 }
